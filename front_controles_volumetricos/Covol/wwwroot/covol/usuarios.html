@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Cruces</title>
+    <link href="../css/bootstrap.css" rel="stylesheet" />
+    <link href="../css/all.css" rel="stylesheet" />
+    <link href="../css/style.css" rel="stylesheet" />
+</head>
+<body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
+    <!-- Breadcrumb-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">Inicio</li>
+        <li class="breadcrumb-item">
+            <a href="#">Catálogos</a>
+        </li>
+        <li class="breadcrumb-item active">Usuarios</li>
+    </ol>
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+            <div class="container-fluid">
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h1 class="h3 mb-0 text-gray-800">Usuarios</h1>
+                </div>
+                <div class="row">
+                    <div class="col-md-7 mb-3">
+                        <div class="card shadow">
+                            <div class="card-header"><span class="fas fa-user-edit fa-lg" aria-hidden="true"></span> Alta de usuarios</div>
+                            <div class="card-body align-content-center align-items-center center-block ">
+                                <form class="form-horizontal" method="post">
+                                    <div class="form-group">
+                                        <div class="input-group col-md-9">
+                                            <div class="input-group-addon" style="margin:5px 10px;"><span class="far fa-user fa-2x"></span></div>
+                                            <input type="text" class="form-control" id="exampleInputAmount" placeholder="Nombre">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group col-md-9">
+                                            <div class="input-group-addon" style="margin:5px 10px;"><span class="far fa-envelope fa-2x"></span></div>
+                                            <input type="text" class="form-control" id="exampleInputAmount" placeholder="Email">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group col-md-9">
+                                            <div class="input-group-addon" style="margin:5px 10px;"><span class="far fa-id-badge fa-2x"></span></div>
+                                            <input type="text" class="form-control" id="exampleInputAmount" placeholder="Rol">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group col-md-9">
+                                            <div class="input-group-addon" style="margin:5px 10px;"><span class="fa fa-pencil-alt fa-2x"></span></div>
+                                            <textarea class="form-control" id="message" name="message" placeholder="Ingrese un comentario respecto a las actividades del usuarios o cualquier informaci&oacute;n adicional"
+                                                      rows="7"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-12 text-center">
+                                            <button type="submit" class="btn btn-primary btn-lg"><span class="far fa-save fa-lg"></span> Guardar</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="card shadow">
+                            <div class="card-header">
+                                <span class="far fa-address-book fa-lg" aria-hidden="true"></span>
+                                Porcentaje de ventas
+                            </div>
+                            <div class="card-body">
+                                <div style="min-height:420px;max-height:420px;overflow-y:auto">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Usario</th>
+                                                <th>Rol</th>
+                                                <th>Acción</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card shadow">
+                            <div class="card-header">
+                                <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                                Movimientos
+                            </div>
+                            <div class="card-body">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Usuario</th>
+                                            <th>Rol</th>
+                                            <th>Fecha de creación</th>
+                                            <th>Último acceso</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,196 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Perfiles</title>
+    <link href="../covol/css/bootstrap.css" rel="stylesheet" />
+    <link href="../covol/css/all.css" rel="stylesheet" />
+    <link href="../covol/css/style.css" rel="stylesheet" />
+    <link href="../covol/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+    <link href="../covol/css/datatables.css" rel="stylesheet" />
+</head>
+<body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
+    <style>
+
+        .uniqueClassName {
+            text-align: center;
+        }
+    </style>
+    <!-- Breadcrumb-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">Inicio</li>
+        <li class="breadcrumb-item">
+            <a href="#">Catálogos</a>
+        </li>
+        <li class="breadcrumb-item active">Perfiles</li>
+    </ol>
+    <form action="../covol/OauthClient/authcodestate" method="get" id="formOAuthClient"></form>
+    <div class="row col-lg-12 justify-content-sm-center">
+        <div class="col-lg-8 mb-8" style="margin-top:20px">
+            <div class="card shadow mb-4">
+                <div class="card-header text-white text-right ">
+                    <a class="btn btn-primary" href="#ModalActualizar" data-toggle="modal">
+                        <span class="fas fa-plus-circle fa-lg" aria-hidden="true"></span> Agregar
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="dataTablePerfil" class="table table-responsive-sm table-hover table-outline mb-0">
+                            <thead class="thead-light">
+                                <tr class="text-center">
+                                    <th>
+                                        ID
+                                    </th>
+                                    <th class="text-center">
+                                        Nombre
+                                    </th>
+                                    <th class="text-center">
+                                        RFC
+                                    </th>
+                                    <th class="text-center">
+                                        Perfil
+                                    </th>
+                                    <th class="text-center">
+                                        Carga
+                                    </th>
+                                    <th class="text-center">
+                                        Catálogo
+                                    </th>
+                                    <th class="text-center">
+                                        Cruce
+                                    </th>
+                                    <th class="text-center">
+                                        Acciones
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer text-white text-right ">
+                    <a class="btn btn-primary" href="#ModalActualizar" data-toggle="modal">
+                        <span class="fas fa-plus-circle fa-lg" aria-hidden="true"></span> Agregar
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" style="padding-top:3%!important" id="ModalActualizar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle"><span class="fas fa-user-edit fa-lg" aria-hidden="true"></span> Registro de perfil</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <div class="input-group col-md-12">
+                                <div class="input-group-addon" style="margin:5px 10px;"><span class="fas fa-user-tag  fa-2x"></span></div>
+                                <input type="text" class="form-control" id="inputActualizaNombre" maxlength="50" placeholder="Nombre ">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group col-md-12">
+                                <div class="input-group-addon" style="margin:5px 10px;"><span class="fas fa-user-tag  fa-2x"></span></div>
+                                <input type="text" class="form-control" id="inputActualizaRFC" maxlength="50" placeholder="RFC">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group col-md-12">
+                                <div class="input-group-addon" style="margin:5px 10px;"><span class="fas fa-user-tag  fa-2x"></span></div>
+                                <select class="form-control" id="inputActualizaPerfil" placeholder="Nombre del Perfil"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group col-md-4">
+                                <div class="input-group-addon" style="margin:5px 10px;">
+                                    <input type="checkbox" id="inputActualizaCarga" title="Carga" />
+                                    <a> Carga </a>
+                                </div>
+                                <div class="input-group-addon" style="margin:5px 10px;">
+                                    <input type="checkbox" id="inputActualizaCatalogo" title="Catalogo" />
+                                    <a> Catálogo </a>
+                                </div>
+                            </div>
+                            <div class="input-group col-md-4">
+                                <div class="input-group-addon" style="margin:5px 10px;">
+                                    <input type="checkbox" id="inputActualizaCruce" title="Cruce" />
+                                    <a> Cruce </a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary float-right" onclick="ActualizarPerfil();">Aceptar</button>
+                    <button class="btn btn-danger float-right" onclick="CerrarVentana();">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Dialog -->
+    <div class="modal fade" style="padding-top:3%!important" id="ModalBorrar" tabindex="-1" role="dialog" aria-labelledby="ModalBorrarLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Borrar Perfil</h4>
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-hidden="true">
+                        &times;
+                    </button>
+                </div>
+                <div class="modal-body" style="height: 75px">
+                    <p>¿Estás seguro de eliminar el perfil?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="confirm-delete-ok" onclick="EliminarPerfil();">
+                        Aceptar
+                    </button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" id="IdUsuario" value="0" />
+    <input type="hidden" id="idPerfil" value="0" />
+    <input type="hidden" id="Nombre" value="0" />
+    <input type="hidden" id="RFC" value="0" />
+    <input type="hidden" id="Perfil" value="0" />
+    <input type="hidden" id="carga" value="0" />
+    <input type="hidden" id="cruce" value="0" />
+    <input type="hidden" id="catalogo" value="0" />
+    <script src="../covol/js/jquery/jquery-3.3.1.min.js"></script>
+    <script src="../covol/js/scripts/Perfil.js"></script>
+    <script src="../covol/js/scripts/ajax_async.js"></script>
+    <script src="../covol/js/bootstrap/bootstrap.js"></script>
+    <script src="../covol/js/jquery/datatables.js"></script>
+    <script src="../covol/js/scripts/query_string.js"></script>
+    <script src="js/scripts/cookie_manager.js"></script>
+    <script>
+        function CerrarVentana() {
+            $("#ModalActualizar").modal('hide');
+        }
+        function abrirModalActualizar(id, IdPerfil, Nombre, RFC, Carga, catalogo, cruce) {
+            $("#IdUsuario").val(id);
+            $("#idPerfil").val(IdPerfil);
+            $("#inputActualizaNombre").val(Nombre);
+            $("#inputActualizaRFC").val(RFC);
+            $("#inputActualizaPerfil").val(IdPerfil);
+            $("#inputActualizaCarga").prop('checked', (Carga == "true" ? true : false));
+            $("#inputActualizaCatalogo").prop('checked', (catalogo == "true" ? true : false));
+            $("#inputActualizaCruce").prop('checked', (cruce == "true" ? true : false));
+            $('#ModalActualizar').modal({ backdrop: 'static', keyboard: false, show: true });
+        }
+        function abrirModalBorrar(id) {
+            $("#IdUsuario").val(id);
+            $('#ModalBorrar').modal({ backdrop: 'static', keyboard: false, show: true });
+        }
+    </script>
+</body>
+</html>

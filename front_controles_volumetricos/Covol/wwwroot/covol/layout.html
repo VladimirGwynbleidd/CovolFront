@@ -1,0 +1,276 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>COVOL</title>
+    <meta http-equiv="content-type" content="text/html" charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv='cache-control' content='no-cache'>
+    <meta http-equiv='expires' content='0'>
+    <meta http-equiv='pragma' content='no-cache'>
+    <link href="../covol/css/bootstrap.css" rel="stylesheet" />
+    <!--<link href="../css/bootstrap.css" rel="stylesheet" />-->
+    <link href="../covol/css/style.css" rel="stylesheet" />
+    <link href="../covol/css/all.css" rel="stylesheet" />
+    <style>
+        #AlertModal i {
+            -webkit-animation-name: example; /* Safari 4.0 - 8.0 */
+            -webkit-animation-duration: 1s; /* Safari 4.0 - 8.0 */
+            animation-timing-function: linear;
+            animation-name: example;
+            animation-duration: 2s;
+        }
+
+        @-webkit-keyframes example {
+            from {
+                -ms-transform: rotate(0deg);
+            }
+
+            to {
+                -ms-transform: rotate(360deg);
+            }
+        }
+
+        /* Standard syntax */
+        @keyframes example {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
+    <header class="app-header navbar">
+        <!-- Sidebar Toggle (Topbar) -->
+        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+            <span class="fa fa-bars"></span>
+        </button>
+        <!-- Topbar Search -->
+        <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+            <div class="input-group">
+                <input type="text" class="form-control bg-light border-0 small text-center" value="Covol" disabled="disabled"
+                       placeholder="Covol" readonly="readonly">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" disabled="disabled" type="button">
+                        <span class="fas fa-th-large fa-sm"></span> SAT
+                    </button>
+                </div>
+            </div>
+        </form>
+        <!-- Topbar Navbar -->
+        <ul class="navbar-nav ml-auto">
+            <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+            <li class="nav-item dropdown no-arrow d-sm-none">
+                <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    <span class="fas fa-search fa-fw"></span>
+                </a>
+                <!-- Dropdown - Messages -->
+                <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
+                    <form class="form-inline mr-auto w-100 navbar-search">
+                        <div class="input-group">
+                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                                   aria-label="Search" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="button">
+                                    <span class="fas fa-search fa-sm"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </li>
+            <!-- Nav Item - User Information -->
+            <li class="nav-item dropdown no-arrow">
+                <!--<span class="mr-2 d-none d-lg-inline text-gray-600 small" id="rfc_span"></span>-->
+                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" style="display:none" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    <span class="mr-2 d-none d-lg-inline text-gray-600 small" id="rfc_span"></span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                    <a class="dropdown-item" href="../covol/OauthClient/AuthLogout">
+                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                        Cerrar Sesi&oacute;n
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </header>
+    <div class="app-body">
+        <div class="sidebar">
+            <nav class="sidebar-nav">
+                <ul class="nav nav-pills flex-column">
+                    <li class="nav-title nav-item" id="MenuCarga" style="display:none">
+                        <a class="nav-link" href="javascript:LLamarIframe('carga.html');">
+                            <span class="fas fa-cloud-upload-alt fa-2x"></span>
+                            Carga
+                        </a>
+                    </li>
+                    <li class="nav-title nav-item" id="MenuCatalogos" style="display:none">
+                        <a class="nav-link" data-toggle="collapse" href="#item-1">
+                            <span class="fa fa-layer-group fa-2x"></span> Catálogos <span class="fas fa-caret-square-down fa-lg ml-4"></span>
+                        </a>
+                        <div id="item-1" class="collapse">
+                            <ul class="nav flex-column ml-3">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="javascript:LLamarIframe('productos.html');">
+                                        <span class="fas fa-gas-pump fa-2x"></span>
+                                        Productos
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="javascript:LLamarIframe('subproducto.html');">
+                                        <span class="fas fa-address-book fa-2x"></span>
+                                        Subproductos
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="javascript:LLamarIframe('valorestimulo.html');">
+                                        <span class="fas fa-money-check fa-2x"></span>
+                                        Valor Estímulo
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="javascript:LLamarIframe('perfiles.html');">
+                                        <span class="fas fa-user-friends fa-2x"></span>
+                                        Perfiles
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-title nav-item" id="MenuCruces" style="display:none">
+                        <a class="nav-link" href="javascript:LLamarIframe('cruces.html')">
+                            <span class="fas fa-random fa-2x"></span>
+                            generación de cruces
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <main class="main">
+            <div id="content-wrapper">
+
+                <div class="content">
+                    <div class="embed-responsive embed-responsive-1by1">
+                        <!--<iframe title="Carga de archivos" class="embed-responsive-item" id="TOTO" src="carga.html"></iframe>-->
+                        <iframe title="Carga de archivos" class="embed-responsive-item" id="TOTO"></iframe>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <form action="../covol/OauthClient/authcodestate" method="get" id="formOAuthClient"></form>
+    <div class="modal" tabindex="-1" role="dialog" id="mdlMensajes">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Remover archivo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>¿Seguro que desea quitar el archivo?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger">Remover</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div class="text-center">
+            <p class="text-muted"> <strong>Servicio de Administración Tributaria</strong></p>
+        </div>
+    </footer>
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" data-backdrop="static" role="dialog" id="alert-privilegios">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-danger">
+                    <h5 class="modal-title">Mensaje del sistema Covol</h5>
+                </div>
+                <div class="modal-body text-center align-content-center">
+                    <span class="fas fa-clipboard-list fa-6x"></span>
+                    <br /><br /><br />
+                    <h3>El usuario no tiene los privilegios para el sistema de Controles Volum&eacute;tricos</h3>
+                </div>
+                <div class="modal-footer">
+                    <!--<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>-->
+                    <a href="../covol/OauthClient/AuthLogout" class="btn btn-secondary">Cerrar ses&oacute;n</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" id="AlertModal">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Mensaje del sistema Covol</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center align-content-center">
+                    <span class="fas fa-clipboard-list fa-6x"></span>
+                    <br /><br /><br />
+                    <h3></h3>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" id="PromModal">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Mensaje del sistema Covol</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center align-content-center">
+                    <span class="fas fa-clipboard-list fa-6x"></span>
+                    <br /><br /><br />
+                    <h3></h3>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" id="btnAccion" class="btn btn-success" data-dismiss="modal">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" id="LoadingModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header ">
+                    <h5 class="modal-title">Realizando cálculo de cruces</h5>
+                </div>
+                <div class="modal-body text-center align-content-center">
+                    <img src="../covol/images/Loading_2.gif" class="img-fluid" alt="Cargando..." />
+                    <h3>Calculando...</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../covol/js/jquery/jquery-3.3.1.min.js"></script>
+    <script src="../covol/js/bootstrap/bootstrap.js"></script>
+    <script src="../covol/js/scripts/Utilitist.js"></script>
+    <script src="../covol/js/scripts/ajax_async.js"></script>
+    <script src="../covol/js/scripts/ajax.js"></script>
+    <script src="../covol/js/scripts/cookie_manager.js"></script>
+    <script src="../covol/js/scripts/query_string.js"></script>
+    <script src="../covol/js/scripts/base64.js"></script>
+</body>
+</html>

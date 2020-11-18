@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Cruces</title>
+    <link href="../css/bootstrap.css" rel="stylesheet" />
+    <link href="../css/all.css" rel="stylesheet" />
+    <link href="../css/style.css" rel="stylesheet" />
+    <link href="../css/bootstrap-datepicker.min.css" rel="stylesheet" />
+    <link href="../js/jquery/jtable/themes/lightcolor/blue/jtable.min.css" rel="stylesheet" />
+</head>
+<body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
+    <!-- Breadcrumb-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">Inicio</li>
+        <li class="breadcrumb-item active">Generacion de Cruces</li>
+    </ol>
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Main Content -->
+        <div id="content">
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+                <div class="tab-content">
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true" estatus="1">Pendientes</a>
+                            <a class="nav-item nav-link" id="nav-proc-tab" data-toggle="tab" href="procesados.html" role="tab" aria-controls="nav-proc" aria-selected="false" estatus="2">Procesados</a>
+                            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="reportes.html" role="tab" aria-controls="nav-profile" aria-selected="false" estatus="3">Reportes</a>
+                        </div>
+                    </nav>
+                </div>
+                <div class="tab-content" id="nav-tabContent">
+                    <!-- Pendientes -->
+                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                            <h1 class="h3 mb-0 text-gray-800">Cruces por Procesar</h1>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card shadow">
+                                    <div class="card-header">
+                                        <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                                        Lista de productos
+                                    </div>
+                                    <div class="card-body">
+                                        <div id="Productos"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" value="1" id="estatus" />
+    <script src="../js/jquery/jquery-3.3.1.min.js"></script>
+    <script src="../js/jquery/jqueryui/jquery-ui.min.js"></script>
+    <script src="../js/jquery/jqueryui/jquery-ui-datepicker.es.min.js"></script>
+    <script src="../js/bootstrap/bootstrap.js"></script>
+    <script src="../js/bootstrap/modernizr.min.js"></script>
+    <script src="../js/jquery/jtable/jquery.jtable.min.js"></script>
+    <script src="../js/jquery/jtable/localization/jquery.jtable.es.js"></script>
+    <script src="../js/scripts/ajax.js"></script>
+    <script src="../js/scripts/cruces.js"></script>
+</body>
+</html>

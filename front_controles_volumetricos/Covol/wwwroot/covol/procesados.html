@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Cruces</title>
+    <link href="../covol/css/bootstrap.css" rel="stylesheet" />
+    <link href="../covol/css/all.css" rel="stylesheet" />
+    <link href="../covol/css/style.css" rel="stylesheet" />
+    <link href="../covol/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+    <link href="../covol/js/jquery/jtable/themes/lightcolor/blue/jtable.min.css" rel="stylesheet" />
+</head>
+<body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
+    <!-- Breadcrumb-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">Inicio</li>
+        <li class="breadcrumb-item">Generación de Cruces</li>
+        <li class="breadcrumb-item active">Consulta de Cruces Procesados</li>
+    </ol>
+    <form action="../covol/OauthClient/authcodestate" method="get" id="formOAuthClient"></form>
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Main Content -->
+        <div id="content">
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+                <div class="tab-content">
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <a class="nav-item nav-link " id="nav-home-tab" data-toggle="tab" href="cruces.html" role="tab" aria-controls="nav-home" aria-selected="false" estatus="1">Pendientes</a>
+                            <a class="nav-item nav-link active" id="nav-proc-tab" data-toggle="tab" href="#nav-proc" role="tab" aria-controls="nav-proc" aria-selected="true" estatus="2">Procesados</a>
+                            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="reportes.html" role="tab" aria-controls="nav-profile" aria-selected="false" estatus="3">Reportes</a>
+                        </div>
+                    </nav>
+                </div>
+                <div class="tab-content" id="nav-tabContent">
+                    <!--Procesados-->
+                    <div class="tab-pane fade  show active" id="nav-proc" role="tabpanel" aria-labelledby="nav-proce-tab">
+                        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                            <h1 class="h3 mb-0 text-gray-800">Consulta de Cruces Procesados</h1>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card shadow">
+                                    <div class="card-header">
+                                        <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                                        Lista de permisionarios
+                                    </div>
+                                    <div class="card-body">
+                                        <div id="Permicionarios"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" id="mdlReporte">
+                            <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Cruces</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                                            <h1 class="h3 mb-0 text-gray-800"> </h1>
+                                            <a href="javascript:exportTableToExcel()" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                                                <span class="fas fa-download fa-sm text-white-50"></span>
+                                                Generate Report
+                                            </a>
+                                        </div>
+                                        <div class="card shadow" hidden="hidden">
+                                            <div class="card-header">
+                                                <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                                                Cabecera
+                                            </div>
+                                            <div class="card-body">
+                                                <div id="Cabecera"></div>
+                                            </div>
+                                        </div>
+                                        <div class="card shadow">
+                                            <div class="card-header">
+                                                <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                                                Consolidado
+                                            </div>
+                                            <div class="card-body">
+                                                <div id="Consolidado"></div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" value="2" id="estatus" />
+    <script src="../covol/js/jquery/jquery-3.3.1.min.js"></script>
+    <script src="../covol/js/jquery/jqueryui/jquery-ui.min.js"></script>
+    <script src="../covol/js/bootstrap/bootstrap.js"></script>
+    <script src="../covol/js/bootstrap/modernizr.min.js"></script>
+    <script src="../covol/js/bootstrap/chart.min.js"></script>
+    <script src="../covol/js/bootstrap/bootstrap-datepicker.min.js"></script>
+    <script src="../covol/js/bootstrap/bootstrap-datepicker.es.min.js"></script>
+    <script src="../covol/js/jquery/jtable/jquery.jtable.min.js"></script>
+    <script src="../covol/js/jquery/jtable/localization/jquery.jtable.es.js"></script>
+    <script src="../covol/js/scripts/ajax.js"></script>
+    <script src="js/scripts/ajax_async.js"></script>
+    <script src="../covol/js/scripts/procesados.js"></script>
+    <script src="../covol/js/scripts/query_string.js"></script>
+    <script src="js/scripts/cookie_manager.js"></script>
+</body>
+</html>

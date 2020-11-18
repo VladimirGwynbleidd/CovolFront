@@ -1,0 +1,328 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Carga</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="../covol/js/jquery/jqueryui/jquery-ui.min.css" rel="stylesheet" />
+    <link href="../covol/css/bootstrap.css" rel="stylesheet" />
+    <link href="../covol/css/style.css" rel="stylesheet" />
+    <link href="../covol/css/dataTables.bootstrap4.css" rel="stylesheet" />
+    <link href="../covol/css/all.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../covol/css/dropzone.css">
+    <link href="../covol/js/jquery/jtable/themes/lightcolor/blue/jtable.min.css" rel="stylesheet" />
+    <style>
+        .card-body {
+            -webkit-box-flex: 1;
+            -ms-flex: 1 1 auto;
+            flex: 1 1 auto;
+            padding: 1.25rem;
+        }
+
+        .no-gutters {
+            margin-right: 0;
+            margin-left: 0;
+        }
+
+            .no-gutters > .col,
+            .no-gutters > [class*="col-"] {
+                padding-right: 0;
+                padding-left: 0;
+            }
+
+        .align-items-center {
+            -webkit-box-align: center !important;
+            -ms-flex-align: center !important;
+            align-items: center !important;
+        }
+
+        .text-xs {
+            font-size: .8rem;
+        }
+
+        .mr-2,
+        .mx-2 {
+            margin-right: 0.5rem !important;
+        }
+
+        .border-left-primary {
+            border-left: 0.25rem solid #4e73df !important;
+        }
+
+        .border-left-success {
+            border-left: 0.25rem solid #1cc88a !important;
+        }
+
+        .border-left-info {
+            border-left: 0.25rem solid #36b9cc !important;
+        }
+
+        .border-left-warning {
+            border-left: 0.25rem solid #f6c23e !important;
+        }
+
+        .border-left-danger {
+            border-left: 0.25rem solid #e74a3b !important;
+        }
+
+        .border-bottom-primary {
+            border-bottom: 0.25rem solid #4e73df !important;
+        }
+
+        .border-bottom-success {
+            border-bottom: 0.25rem solid #1cc88a !important;
+        }
+
+        .border-bottom-info {
+            border-bottom: 0.25rem solid #36b9cc !important;
+        }
+
+        .border-bottom-warning {
+            border-bottom: 0.25rem solid #f6c23e !important;
+        }
+
+        .border-bottom-danger {
+            border-bottom: 0.25rem solid #e74a3b !important;
+        }
+      	.prevent-click {
+    		pointer-events: none;
+		}
+    </style>
+</head>
+
+<body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
+    <!-- Breadcrumb-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">Inicio</li>
+        <li class="breadcrumb-item active">Carga</li>
+    </ol>
+    <form action="../covol/OauthClient/authcodestate" method="get" id="formOAuthClient"></form>
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" id="modalAutoClose">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Mensaje del sistema Covol</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center align-content-center">
+                    <span class="fas fa-clipboard-list fa-6x"></span>
+                    <br /><br /><br />
+                    <h3>Se estarán subiendo los archivos, por favor espere</h3>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnAccion" class="btn btn-success" data-dismiss="modal">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Main Content -->
+        <div id="content">
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+                <!-- Page Heading -->
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h1 class="h3 mb-0 text-gray-800">Carga y Validación de archivos</h1>
+                </div>
+                <!-- Content Row -->
+                <div class="row text">
+                    <!-- Earnings (Monthly) Card Example -->
+                    <div class="col-md-3 mb-4">
+                        <div class="card border-left-primary shadow h-75 py-2">
+                            <a class="text-primary" href="#LogModal" data-toggle="modal" level="ALL">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                Archivos
+                                                Procesados
+                                            </div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="txtProcesados">0</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <span class="fas fa-calendar fa-2x text-gray-300"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-4">
+                        <div class="card border-left-success shadow h-75 py-2">
+                            <a class="text-success" href="#LogModal" data-toggle="modal" level="INFO">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                Archivos
+                                                Correctos
+                                            </div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="txtCorrectos">0</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <span class="fas fa-clipboard-list fa-2x text-gray-300"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-4">
+                        <div class="card border-left-warning shadow h-75 py-2">
+                            <a class="text-success" href="#LogModal" data-toggle="modal" level="WARN">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center text-warning ">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-uppercase mb-1">
+                                                Archivos
+                                                Duplicados
+                                            </div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="txtInCorrectos">0</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <span class="fas fa-exclamation-triangle fa-2x text-gray-300"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Pending Requests Card Example -->
+                    <div class="col-md-3 mb-4">
+                        <div class="card border-left-danger shadow h-75 py-2">
+                            <a class="text-danger" href="#LogModal" data-toggle="modal" level="ERROR">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                                                Archivos
+                                                Incorrectos
+                                            </div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="txtErrores">0</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <span class="fa fa-times-circle fa-2x text-gray-300"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Content Row -->
+                <div class="row">
+                    <div class="col-md-4" id="divCargaArchivos">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                <h6 class="m-0 font-weight-bold text-primary">Subir Archivo</h6>
+                            </div>
+                            <div class="card-body">
+                                <form id="drag_box" class="box" method="post" action="../api/upload" enctype="multipart/form-data">
+                                    <div class="box__input center-block text-center">
+                                        <span style="color:#e4e5e6">
+                                            <span class="fas fa-cloud-upload-alt fa-5x"></span>
+                                        </span>
+                                        <br>
+                                        <input class="box__file" type="file" accept=".txt,.xml" name="files[]" id="file"
+                                               data-multiple-caption="{count} files selected" multiple />
+                                        <input type="submit" value="Enviar" id="enviar" accept=".txt,.xml" class="box__file">
+                                        <label id="lblFiles" for="file">Escógelo o arrástralo</label>
+                                        <button class="box__button" type="submit">Uploads</button>
+                                    </div>
+                                    <div class="box__uploading">Uploading&hellip;</div>
+                                    <div class="box__success">Done!</div>
+                                    <div class="box__error">Error! <span></span>.</div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-8" id="divEnviarArchivo">
+                        <div class="card" id="Archivos">
+                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                <h6 class="m-0 font-weight-bold text-primary">Lista de archivos a procesar <small id="smlElemntos"></small></h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive center-block text-center" style="max-height:280px;overflow-x:auto;">
+                                    <table class="table table-bordered table-striped font-xs" id="tbArchivos">
+                                        <thead>
+                                            <tr class="bg-primary">
+                                                <th>Nombre</th>
+                                                <th>Tamaño</th>
+                                                <th>Proceso</th>
+                                                <th>Status</th>
+                                                <th>Acción</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="card-footer center-block text-center" style="display: none;">
+                                <button type="button" id="btn_enviarArchvivo" class="btn btn-success">
+                                    <span class="fa fa-check-double" aria-hidden="true"></span> Procesar todos
+                                </button>
+                                <span style="margin:2rem">&nbsp;</span>
+                                <button type="button" onclick="borrarTodo()" class="btn btn-danger">
+                                    <span class="fa fa-times" aria-hidden="true"></span> Cancelar todos
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+    </div>
+
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" id="LogModal">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Bitácora de carga de archivos</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="RegistrosB"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" id="uriModal">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Uri</h5>
+                </div>
+                <div class="modal-body">
+                    <div id="uriText"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- End of Content Wrapper -->
+    <script src="../covol/js/jquery/jquery-3.3.1.min.js"></script>
+    <script src="../covol/js/jquery/jqueryui/jquery-ui.min.js"></script>
+    <script src="../covol/js/bootstrap/bootstrap.js"></script>
+    <script src="../covol/js/bootstrap/modernizr.min.js"></script>
+    <script src="../covol/js/jquery/jtable/jquery.jtable.min.js"></script>
+    <script src="../covol/js/jquery/jtable/localization/jquery.jtable.es.js"></script>
+    <script src="../covol/js/scripts/dropzone.js"></script>
+    <script src="../covol/js/scripts/carga.js"></script>
+    <script src="../covol/js/scripts/ajax_async.js"></script>
+    <script src="../covol/js/scripts/ajax.js"></script>
+    <script src="../covol/js/scripts/query_string.js"></script>
+    <script src="js/scripts/cookie_manager.js"></script>
+</body>
+
+</html>

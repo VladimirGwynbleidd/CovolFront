@@ -1,0 +1,158 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Cruces</title>
+    <link href="../covol/css/bootstrap.css" rel="stylesheet" />
+    <link href="../covol/css/all.css" rel="stylesheet" />
+    <link href="../covol/css/style.css" rel="stylesheet" />
+    <link href="../covol/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+    <link href="../covol/css/datatables.css" rel="stylesheet" />
+</head>
+<body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
+    <style>
+
+        .uniqueClassName {
+            text-align: center;
+        }
+    </style>
+    <!-- Breadcrumb-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">Inicio</li>
+        <li class="breadcrumb-item">
+            <a href="#">Catálogos</a>
+        </li>
+        <li class="breadcrumb-item active">Productos</li>
+    </ol>
+   <form action="../covol/OauthClient/authcodestate" method="get" id="formOAuthClient"></form>
+    <div class="row col-lg-12 justify-content-sm-center">
+        <div class="col-lg-8 mb-8" style="margin-top:20px">
+            <div class="card shadow mb-4">
+                <div class="card-header text-white text-right ">
+                    <a class="btn btn-primary" href="#ModalActualizar" data-toggle="modal">
+                        <span class="fas fa-plus-circle fa-lg" aria-hidden="true"></span> Agregar
+                    </a>
+                </div>
+                <div class="card-body">
+                    <table id="dataTableProducto" class="table table-responsive-sm table-hover table-outline mb-0">
+                        <thead class="thead-light">
+                            <tr class="text-center">
+                                <th>
+                                    ID
+                                </th>
+                                <th class="text-center">
+                                    Clave
+                                </th>
+                                <th class="text-center">
+                                    Producto
+                                </th>
+                                <th class="text-center">
+                                    Descripción
+                                </th>
+                                <th class="text-center">
+                                    Acciones
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="tbody"></tbody>
+                    </table>
+                </div>
+                <div class="card-footer text-white text-right ">
+                    <a class="btn btn-primary" href="#ModalActualizar" data-toggle="modal">
+                        <span class="fas fa-plus-circle fa-lg" aria-hidden="true"></span> Agregar
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" style="padding-top:3%!important" id="ModalActualizar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle"><span class="fas fa-gas-pump fa-lg" aria-hidden="true"></span> Registros de productos</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <div class="input-group col-md-12">
+                                <div class="input-group-addon" style="margin:5px 10px;"><span class="fas fa-cube fa-2x"></span></div>
+                                <input type="text" class="form-control" id="inputActualizaClaveProducto" maxlength="100" placeholder="Nombre del producto">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group col-md-12">
+                                <div class="input-group-addon" style="margin:5px 10px;"><span class="fas fa-tag fa-2x"></span></div>
+                                <input type="text" class="form-control" id="inputActualizaTipoProducto" maxlength="2" placeholder="Clave del Producto">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group col-md-12">
+                                <div class="input-group-addon" style="margin:5px 10px;"><span class="fa fa-barcode fa-2x"></span></div>
+                                <input type="text" class="form-control" id="ActualizaMessage" name="message" maxlength="100" placeholder="Ingrese un comentario ó cualquier información adicional" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary float-right" onclick="ActualizarTipoProducto();">Aceptar</button>
+                    <button class="btn btn-danger float-right" onclick="CerrarVentana();">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Dialog -->
+    <div class="modal fade" style="padding-top:3%!important" id="ModalBorrar" tabindex="-1" role="dialog" aria-labelledby="ModalBorrarLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Borrar Tipo de Producto</h4>
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-hidden="true">
+                        &times;
+                    </button>
+                </div>
+                <div class="modal-body" style="height: 75px">
+                    <p>¿Estás seguro de eliminar el registro?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="confirm-delete-ok" onclick="EliminarTipoProducto();">
+                        Aceptar
+                    </button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" id="idTipoProducto" value="0" />
+    <input type="hidden" id="claveProducto" value="0" />
+    <input type="hidden" id="descripcionTipoProducto" value="0" />
+    <script src="../covol/js/jquery/jquery-3.3.1.min.js"></script>
+    <script src="../covol/js/scripts/Producto.js"></script>
+    <script src="../covol/js/scripts/ajax_async.js"></script>
+    <script src="../covol/js/bootstrap/bootstrap.js"></script>
+    <script src="../covol/js/jquery/datatables.js"></script>
+    <script src="../covol/js/scripts/query_string.js"></script>
+    <script src="js/scripts/cookie_manager.js"></script>
+    <script>
+        function CerrarVentana() {
+            $("#ModalActualizar").modal('hide');
+        }
+        function abrirModalActualizar(id, descripcion, clave, comentario) {
+            $("#idTipoProducto").val(id);
+            $("#inputActualizaClaveProducto").val(clave);
+            $("#inputActualizaTipoProducto").val(descripcion);
+            $('#ActualizaMessage').val(comentario);
+            $('#ModalActualizar').modal({ backdrop: 'static', keyboard: false, show: true });
+        }
+        function abrirModalBorrar(id) {
+            $("#idTipoProducto").val(id);
+            $('#ModalBorrar').modal({ backdrop: 'static', keyboard: false, show: true });
+        }
+    </script>
+</body>
+</html>

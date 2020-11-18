@@ -1,0 +1,58 @@
+  pipeline{
+        agent any
+        environment{
+            sqScannerMsBuildHome = '/var/lib/jenkins/dotnet/.dotnet/tools/.store/dotnet-sonarscanner/4.7.1/dotnet-sonarscanner/4.7.1/tools/netcoreapp2.1/any' //tool 'sonarms'
+            nuget = 'mono /usr/local/bin/nuget.exe'
+        }
+        stages{
+            stage('Source Checkout'){
+                steps{
+                    git branch: 'master',
+                    credentialsId: 'Gogs-Jenkins',
+                    url: 'http://10.99.226.50:3000/FN-COVOL/FRONT_Controles_Volumetricos.git'
+                    sh 'ls -l'
+                    sh 'dotnet --version'
+                }
+            }
+            stage('Build'){
+                steps{
+                    sh '${nuget} restore Presentacion.sln'
+                    sh 'dotnet clean -c Release -f netcoreapp2.1 -o app/'
+                    sh 'dotnet build "Covol/Covol.csproj" -c Release -f netcoreapp2.1 -o app/'
+                }
+            }
+            stage('SonarQube analysis'){
+                steps{
+                    withSonarQubeEnv("sonar-int"){
+                        sh 'dotnet ${sqScannerMsBuildHome}/SonarScanner.MSBuild.dll begin /k:"covol-front"'
+                        sh 'dotnet clean -f netcoreapp2.1 -c Debug'
+                        sh 'dotnet build Presentacion.sln -f netcoreapp2.1 -c Debug'
+                        sh 'dotnet test XUnitTestCovol/XUnitTestCovol.csproj -c Debug -f netcoreapp2.1 --logger:trx'
+                        sh 'dotnet ${sqScannerMsBuildHome}/SonarScanner.MSBuild.dll end'
+                    }
+                }
+            }
+            stage('Package'){
+                steps{
+                    sh 'dotnet publish "Covol/Covol.csproj" -c Release -f netcoreapp2.1 -o app/'
+                    sh 'docker build --tls-verify=false -t covolfront:v1.0 .'
+                }
+            }
+            stage('Deploy'){
+                steps{
+                    sh 'docker login -u openshift -p eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJjb3ZvbCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJqZW5raW5zMi10b2tlbi12bjRkNSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJqZW5raW5zMiIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50LnVpZCI6IjQ2MzZhZmQ0LTA3MGEtMTFlYS1hMmY1LTAyZTI2N2NlZTA0OCIsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDpjb3ZvbDpqZW5raW5zMiJ9.t8FGolEcpEAjd0Q-BSbK-K4O6WQr8BudcsUWNWXZ0YDjh9crJHLKpWaDgsDafV0Fj3HaiuvbOjrWTaMrK9_Xsjo7aePMDuxGiTqhdIZDRs7rhYWlSyLNlZ97ZJI8FgWeWpQ_BSf8CZyZ_zJ6Eep4C_n8ElISxNM1muuHLpmGli1AZJdIHUjWuuL9LIZ77iPXIVrrCwnYecF1dqLZIU2ocUuZjQAS2cnxD02M7g1KXQyV3Bo9Ia_TZw-yLdUN2UTy03fjq860nUEPKQoZoMylF3RKWmczoV2snsy0UN_e8OU_Fgv2L_8ycpKD5M1y9vwGhNVDapsw_axBAmWJGaeT6A docker-registry-default.cnh.dev.cloudb.sat.gob.mx'
+                    sh 'docker tag localhost/covolfront:v1.0 docker-registry-default.cnh.dev.cloudb.sat.gob.mx/covol/covolfront:v1.0'
+                    sh 'docker push docker-registry-default.cnh.dev.cloudb.sat.gob.mx/covol/covolfront:v1.0'
+                }
+            }
+            stage('Notificación'){
+                steps{
+                    script {
+                        emailext attachLog: true, body: """<p> Se ejecutó la Tarea: ${env.JOB_NAME} - Núm. Ejecución :${env.BUILD_NUMBER} <br/><br/>  Se adjunta el log de ejecución.<br><br/>Puede validar el log también en el siguiente link <a href="${env.BUILD_URL}">${env.JOB_NAME}</a><br><br>Este correo se mandó automáticamente mediante la herramienta Jenkins <br><br/>Team AVL<br/>avl.atencion@sat.gob.mx</p>""", compressLog: true, replyTo: 'avl.atencion@sat.gob.mx',
+                        subject: "[Jenkins] ${currentBuild.projectName} #${env.BUILD_NUMBER} Estado : ${currentBuild.currentResult}!", to: 'jesus.covarrubias@sat.gob.mx,ivan.hernandez@sat.gob.mx,eric.rodriguez@sat.gob.mx,claudia.vazquez@sat.gob.mx,avl.versiones&compilaciones@sat.gob.mx,vjuarez@syesoftware.com,vladimir.martinez@syesoftware.com'
+                    }
+
+                }
+            }
+        }
+    }

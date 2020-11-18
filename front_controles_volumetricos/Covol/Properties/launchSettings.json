@@ -1,0 +1,48 @@
+{
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iis": {
+      "applicationUrl": "http://localhost/covol",
+      "sslPort": 0
+    },
+    "iisExpress": {
+      "applicationUrl": "http://localhost:60822",
+      "sslPort": 0
+    }
+  },
+  "profiles": {
+    "IIS Express": {
+      "commandName": "IIS",
+      "launchBrowser": true,
+      "launchUrl": "index.html",
+      "environmentVariables": {
+        "ProcesamientoUri": "http://localhost:56131/api/",
+        "Param_rfc": "rfc_emp"
+      }
+    },
+    "Covol": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "covol/layout.html",
+      "environmentVariables": {
+        "ProcesamientoUri": "http://localhost:56133/api/",
+        "ClientSecret": "HKCmKBJ_Y5ZdDkxh_M3kyWsPX8_HCbc9FqojKDu6EOvUMRuu43A9XJ86tljyhBNvMC3tJSSN54d-_EwLiZfkRA",
+        "redirect_uriAuth": "http://localhost:5001/covol/layout.html",
+        "OauthUri": "https://auth.dev.cloudb.sat.gob.mx",
+        "ClientId": "75f0fa18-64d6-45bf-abf2-2c84797f4fa1",
+        "Param_rfc": "rfc_emp",
+        "ActiveOauth": "true",
+        "ProcesamientoUriApi": "http://localhost:56133",
+        "COVOL_REDIRECT_LOGOUT": "https://pe.dev.cloudb.sat.gob.mx/AGLogout"
+      },
+      //"applicationUrl": "https://localhost:5001;http://localhost:5000"
+      "applicationUrl": "http://localhost:5001"
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "launchBrowser": true,
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/index.html"
+    }
+  }
+}
